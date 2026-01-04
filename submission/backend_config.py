@@ -38,8 +38,8 @@ class BackendConfig:
     # ------------------------------------------------------------------
     # Kaggle
     # ------------------------------------------------------------------
-    main_competition_name: str = field(metadata={"description": "Kaggle competition name for submission"})
-    slack_competition_name: str = field(metadata={"description": "Kaggle competition name for Slack submission"})
+    main_competition_name: str = field(default="", metadata={"description": "Kaggle competition name for submission"})
+    slack_competition_name: str = field(default="", metadata={"description": "Kaggle competition name for Slack submission"})
     
     kaggle_output_json: str = field(
         default="kaggle_data.json", # If you change this, make sure to update autolab/runner.py too
@@ -66,7 +66,13 @@ class BackendConfig:
         Raises:
             ValueError: if wandb_top_n is not positive
             ValueError: if metric is an empty string
-        """        
+        """ 
+        if self.main_competition_name.strip() == "":
+            raise ValueError("main_competition_name must be a non-empty string")
+        
+        if self.slack_competition_name.strip() == "":
+            raise ValueError("slack_competition_name must be a non-empty string")
+              
         if self.wandb_top_n <= 0:
             raise ValueError("wandb_top_n must be a positive integer")
 
