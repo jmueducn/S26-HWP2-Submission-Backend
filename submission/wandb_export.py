@@ -27,7 +27,6 @@ def export_top_wandb_runs(
     entity: str,
     project: str,
     acknowledged: bool,
-    metric: str,
     top_n: int,
 ) -> List[Dict[str, Any]]:
     """
@@ -36,7 +35,6 @@ def export_top_wandb_runs(
     Guarantees:
       • W&B authentication succeeds
       • Runs exist for the project
-      • Metric is present in at least one run
 
     Returns:
         A list of fully-serializable dictionaries.
@@ -84,20 +82,9 @@ def export_top_wandb_runs(
     selected = runs[: min(top_n, len(runs))]
 
     records: List[Dict[str, Any]] = []
-    metric_seen = False
-
     for run in selected:
         record = _serialize_run(run)
-        if metric in run.summary:
-            metric_seen = True
         records.append(record)
-
-    if not metric_seen:
-        raise WandBExportError(
-            f"Metric '{metric}' was not found in any selected runs.\n"
-            "👉 Ensure the metric name matches exactly what you logged to W&B."
-        )
-
     log.info("✓ Exported %d W&B run(s)", len(records))
     return records
 

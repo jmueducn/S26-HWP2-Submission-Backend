@@ -84,8 +84,6 @@ class BackendConfig:
         if self.wandb_top_n <= 0:
             raise ValueError("wandb_top_n must be a positive integer")
 
-        if not self.metric.strip():
-            raise ValueError("metric must be a non-empty string")
         
     
     def to_dict(self) -> dict[str, object]:
@@ -97,7 +95,6 @@ class BackendConfig:
         """
         
         return {
-            "metric": self.metric,
             "param_limit": self.param_limit,
             "wandb_top_n": self.wandb_top_n,
             "wandb_output_pkl": self.wandb_output_pkl,
@@ -120,7 +117,6 @@ class BackendConfig:
             BackendConfig: The created BackendConfig instance.
         """
         return cls(
-            metric=data["metric"],
             param_limit=data.get("param_limit", 0),
             wandb_top_n=data.get("wandb_top_n", 10),
             wandb_output_pkl=data.get("wandb_output_pkl", "wandb_top_runs.pkl"),
