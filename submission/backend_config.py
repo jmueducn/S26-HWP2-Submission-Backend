@@ -22,6 +22,12 @@ class BackendConfig:
     # ------------------------------------------------------------------
     metric: str
     direction: Direction
+    param_limit: int = field(
+        default=0,
+        metadata={
+            "description": "Maximum number of allowable trainable parameters in the model"
+        }
+    )
 
     # ------------------------------------------------------------------
     # Weights & Biases
@@ -69,6 +75,12 @@ class BackendConfig:
             ValueError: if wandb_top_n is not positive
             ValueError: if metric is an empty string
         """ 
+        if self.direction not in ("ascending", "descending"):
+            raise ValueError("direction must be either 'ascending' or 'descending'")
+        
+        if self.param_limit <= 0:
+            raise ValueError("param_limit must be a non-negative integer")
+        
         if self.main_competition_name.strip() == "":
             raise ValueError("main_competition_name must be a non-empty string")
         
@@ -92,6 +104,7 @@ class BackendConfig:
         return {
             "metric": self.metric,
             "direction": self.direction,
+            "param_limit": self.param_limit,
             "wandb_top_n": self.wandb_top_n,
             "wandb_output_pkl": self.wandb_output_pkl,
             "main_competition_name": self.main_competition_name,
@@ -115,6 +128,7 @@ class BackendConfig:
         return cls(
             metric=data["metric"],
             direction=data["direction"],
+            param_limit=data.get("param_limit", 0),
             wandb_top_n=data.get("wandb_top_n", 10),
             wandb_output_pkl=data.get("wandb_output_pkl", "wandb_top_runs.pkl"),
             main_competition_name=data["main_competition_name"],

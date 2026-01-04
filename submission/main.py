@@ -89,7 +89,7 @@ def create_submission_zip(cfg: SubmissionConfig, backend_cfg: BackendConfig) -> 
     _banner("BUILDING MODEL METADATA")
 
     try:
-        model_metadata = build_model_metadata(cfg.model)
+        model_metadata = build_model_metadata(cfg.model, param_limit=backend_cfg.param_limit)
     except Exception as exc:
         raise SubmissionError(
             "Failed to extract model metadata.\n"

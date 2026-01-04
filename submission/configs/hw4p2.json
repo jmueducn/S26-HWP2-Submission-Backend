@@ -1,6 +1,7 @@
 {
     "metric": "",
     "direction": "",
+    "param_limit": 0,
     "main_competition_name": "",
     "slack_competition_name": ""
 }
