@@ -2,12 +2,10 @@ from __future__ import annotations
 
 import logging
 from typing import Any, Dict, List
-
 import wandb
 from wandb import Run
 from wandb.errors import AuthenticationError, CommError
-
-from backend_config import Direction
+from submission.backend_config import Direction
 
 log = logging.getLogger(__name__)
 
