@@ -8,12 +8,12 @@ import logging
 from pathlib import Path
 from typing import List
 
-from acknowledgement import ACKNOWLEDGEMENT_MESSAGE
-from backend_config import BackendConfig
-from submission_config import SubmissionConfig
-from kaggle_validate import export_kaggle_metadata
-from wandb_export import export_top_wandb_runs
-from model_metadata import build_model_metadata
+from submission.acknowledgement import ACKNOWLEDGEMENT_MESSAGE
+from submission.backend_config import BackendConfig
+from submission.submission_config import SubmissionConfig
+from submission.kaggle_validate import export_kaggle_metadata
+from submission.wandb_export import export_top_wandb_runs
+from submission.model_metadata import build_model_metadata
 
 
 ###############################################################################
