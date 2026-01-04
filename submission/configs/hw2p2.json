@@ -1,7 +1,7 @@
 {
     "metric": "EER",
     "direction": "ascending",
-    "param_limit": 0,
+    "param_limit": 20000000000,
     "main_competition_name": "s-26-hw-2-p-2-sandbox",
     "slack_competition_name": "s-26-hw-2-p-2-sandbox",
     "submission_zip": "HW2P2_final_submission.zip"
