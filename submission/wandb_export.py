@@ -104,7 +104,7 @@ def _serialize_run(run: Run) -> Dict[str, Any]:
         "created_at": str(run.created_at),
         "config": dict(run.config),
         "tags": list(run.tags),
-        "summary": dict(run.summary),
+        "summary": run.summary._as_dict(),
     }
 
     try:
