@@ -19,7 +19,6 @@ class BackendConfig:
     # ------------------------------------------------------------------
     # Evaluation / Ranking
     # ------------------------------------------------------------------
-    metric: str
     param_limit: int = field(
         default=0,
         metadata={
@@ -69,8 +68,10 @@ class BackendConfig:
         Validation post class initialization.
 
         Raises:
+            ValueError: if param_limit is not a positive integer or zero
+            ValueError: if main_competition_name is empty
+            ValueError: if slack_competition_name is empty
             ValueError: if wandb_top_n is not positive
-            ValueError: if metric is an empty string
         """ 
         if self.param_limit <= 0:
             raise ValueError("param_limit must be a non-zero positive integer")
@@ -84,7 +85,6 @@ class BackendConfig:
         if self.wandb_top_n <= 0:
             raise ValueError("wandb_top_n must be a positive integer")
 
-        
     
     def to_dict(self) -> dict[str, object]:
         """
