@@ -1,6 +1,8 @@
 from __future__ import annotations
 from dataclasses import dataclass, field
 from typing import Literal
+import json
+import os
 
 # Define a type alias for metric direction
 Direction = Literal["ascending", "descending"]
@@ -125,21 +127,21 @@ class BackendConfig:
 # ------------------------------------------------------------------
 # Load Backend Configs for Specific Assignments
 # ------------------------------------------------------------------
-import json
+FILE_PATH = os.path.dirname(os.path.abspath(__file__))
 
-with open("configs/hw1p2.json", "r", encoding="utf-8") as f:
+with open(os.path.join(FILE_PATH, "configs/hw1p2.json"), "r", encoding="utf-8") as f:
     config_data = json.load(f)
 HW1P2_BACKEND_CONFIG = BackendConfig.from_dict(config_data)
 
-with open("configs/hw2p2.json", "r", encoding="utf-8") as f:
+with open(os.path.join(FILE_PATH, "configs/hw2p2.json"), "r", encoding="utf-8") as f:
     config_data = json.load(f)
 HW2P2_BACKEND_CONFIG = BackendConfig.from_dict(config_data)
 
-with open("configs/hw3p2.json", "r", encoding="utf-8") as f:
+with open(os.path.join(FILE_PATH, "configs/hw3p2.json"), "r", encoding="utf-8") as f:
     config_data = json.load(f)
 HW3P2_BACKEND_CONFIG = BackendConfig.from_dict(config_data)
 
-with open("configs/hw4p2.json", "r", encoding="utf-8") as f:
+with open(os.path.join(FILE_PATH, "configs/hw4p2.json"), "r", encoding="utf-8") as f:
     config_data = json.load(f)
 HW4P2_BACKEND_CONFIG = BackendConfig.from_dict(config_data)
 
