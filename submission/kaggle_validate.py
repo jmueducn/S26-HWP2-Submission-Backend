@@ -2,8 +2,9 @@ from __future__ import annotations
 
 import os
 import logging
-from typing import Dict, List
-from kaggle.api.kaggle_api_extended import KaggleApi
+from typing import Dict, List, Any
+from wandb import api
+
 
 log = logging.getLogger(__name__)
 
@@ -20,7 +21,7 @@ class KaggleValidationError(RuntimeError):
 # Helpers
 ###############################################################################
 
-def kaggle_login(username: str, api_key: str) -> KaggleApi:
+def kaggle_login(username: str, api_key: str) -> Any:
     """
     Authenticate with Kaggle and return an API client.
 
@@ -30,13 +31,13 @@ def kaggle_login(username: str, api_key: str) -> KaggleApi:
     os.environ["KAGGLE_USERNAME"] = username
     os.environ["KAGGLE_API_KEY"] = api_key
 
-    api = KaggleApi()
-    api.authenticate()
+    import kaggle
+    api = kaggle.api  # Already authenticated on import
     return api
 
 
 def _submissions_for_user(
-    api: KaggleApi,
+    api: Any,
     competition: str,
     username: str,
 ) -> List:
