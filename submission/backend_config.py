@@ -3,9 +3,30 @@ from dataclasses import dataclass, field
 from typing import Literal
 import json
 import os
+from enum import Enum
 
-# Define a type alias for metric direction
-Direction = Literal["ascending", "descending"]
+# Define an enumeration for metric direction
+class Direction(Enum):
+    NOT_SET = 0
+    ASCENDING = 1
+    DESCENDING = 2
+
+    def to_str(self) -> str:
+        if self == Direction.ASCENDING:
+            return "ascending"
+        elif self == Direction.DESCENDING:
+            return "descending"
+        else:
+            return "not_set"
+    
+    @classmethod
+    def from_str(cls, direction_str: str) -> Direction:
+        if direction_str == "ascending":
+            return cls.ASCENDING
+        elif direction_str == "descending":
+            return cls.DESCENDING
+        else:
+            return cls.NOT_SET
 
 @dataclass(frozen=True, slots=True)
 class BackendConfig:
@@ -21,7 +42,7 @@ class BackendConfig:
     # Evaluation / Ranking
     # ------------------------------------------------------------------
     metric: str
-    direction: Direction
+    direction: Direction = Direction.NOT_SET
     param_limit: int = field(
         default=0,
         metadata={
@@ -75,11 +96,11 @@ class BackendConfig:
             ValueError: if wandb_top_n is not positive
             ValueError: if metric is an empty string
         """ 
-        if self.direction not in ("ascending", "descending"):
-            raise ValueError("direction must be either 'ascending' or 'descending'")
+        if self.direction == Direction.NOT_SET:
+            raise ValueError("direction must be set to either ASCENDING or DESCENDING")
         
         if self.param_limit <= 0:
-            raise ValueError("param_limit must be a non-negative integer")
+            raise ValueError("param_limit must be a non-zero positive integer")
         
         if self.main_competition_name.strip() == "":
             raise ValueError("main_competition_name must be a non-empty string")
@@ -101,9 +122,10 @@ class BackendConfig:
         Returns:
             dict[str, object]: Dictionary representation of the config.
         """
+        
         return {
             "metric": self.metric,
-            "direction": self.direction,
+            "direction": self.direction.to_str(),
             "param_limit": self.param_limit,
             "wandb_top_n": self.wandb_top_n,
             "wandb_output_pkl": self.wandb_output_pkl,
@@ -127,7 +149,7 @@ class BackendConfig:
         """
         return cls(
             metric=data["metric"],
-            direction=data["direction"],
+            direction=Direction.from_str(data["direction"]),
             param_limit=data.get("param_limit", 0),
             wandb_top_n=data.get("wandb_top_n", 10),
             wandb_output_pkl=data.get("wandb_output_pkl", "wandb_top_runs.pkl"),
