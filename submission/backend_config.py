@@ -27,14 +27,24 @@ class BackendConfig:
     )
 
     # ------------------------------------------------------------------
+    # Model metadata
+    # ------------------------------------------------------------------
+    model_metadata_json: str = field(
+        default="model_metadata.json",
+        metadata={
+            "description": "Serialized model metadata for autograding"
+        }
+    )
+
+    # ------------------------------------------------------------------
     # Weights & Biases
     # ------------------------------------------------------------------
     wandb_top_n: int = field(default=10, metadata={
         "description": "Number of top W&B runs to export"
     })
     
-    wandb_output_pkl: str = field(
-        default="wandb_top_runs.pkl", # If you change this, make sure to update autolab/runner.py too
+    wandb_output_json: str = field(
+        default="wandb_top_runs.json", # If you change this, make sure to update autolab/runner.py too
         metadata={
             "description": "Serialized W&B runs for autograding"
         }
@@ -96,8 +106,9 @@ class BackendConfig:
         
         return {
             "param_limit": self.param_limit,
+            "model_metadata_json": self.model_metadata_json,
             "wandb_top_n": self.wandb_top_n,
-            "wandb_output_pkl": self.wandb_output_pkl,
+            "wandb_output_json": self.wandb_output_json,
             "main_competition_name": self.main_competition_name,
             "slack_competition_name": self.slack_competition_name,
             "kaggle_output_json": self.kaggle_output_json,
@@ -118,8 +129,9 @@ class BackendConfig:
         """
         return cls(
             param_limit=data.get("param_limit", 0),
+            model_metadata_json=data.get("model_metadata_json", "model_metadata.json"),
             wandb_top_n=data.get("wandb_top_n", 10),
-            wandb_output_pkl=data.get("wandb_output_pkl", "wandb_top_runs.pkl"),
+            wandb_output_json=data.get("wandb_output_json", "wandb_top_runs.json"),
             main_competition_name=data["main_competition_name"],
             slack_competition_name=data["slack_competition_name"],
             kaggle_output_json=data.get("kaggle_output_json", "kaggle_data.json"),

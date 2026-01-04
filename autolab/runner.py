@@ -32,7 +32,7 @@ REQUIRED_FILES = {
     "ACKNOWLEDGEMENT.txt",
     "README.txt",
     "model_metadata.json",
-    "wandb_export.pkl",
+    "wandb_export.json",
     "kaggle_metadata.json",
 }
 

@@ -34,9 +34,9 @@ create_autograde:
 # Create a dummy submission.zip for testing
 dummy_submission:
 	@echo "Creating dummy submission.zip..."
-	@touch ACKNOWLEDGEMENT.txt README.txt model_metadata.json wandb_export.pkl kaggle_metadata.json
-	@zip -r dummy_submission.zip ACKNOWLEDGEMENT.txt README.txt model_metadata.json wandb_export.pkl kaggle_metadata.json
-	@rm ACKNOWLEDGEMENT.txt README.txt model_metadata.json wandb_export.pkl kaggle_metadata.json
+	@touch ACKNOWLEDGEMENT.txt README.txt model_metadata.json wandb_export.json kaggle_metadata.json
+	@zip -r dummy_submission.zip ACKNOWLEDGEMENT.txt README.txt model_metadata.json wandb_export.json kaggle_metadata.json
+	@rm ACKNOWLEDGEMENT.txt README.txt model_metadata.json wandb_export.json kaggle_metadata.json
 	@echo "Created dummy_submission.zip successfully"
 
 
