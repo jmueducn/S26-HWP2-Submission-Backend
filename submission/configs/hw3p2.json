@@ -1,7 +1,6 @@
 {
-    "metric": "",
-    "direction": "",
     "param_limit": 0,
     "main_competition_name": "",
-    "slack_competition_name": ""
+    "slack_competition_name": "",
+    "submission_zip": "HW3P2_final_submission.zip"
 }

@@ -5,7 +5,6 @@ from typing import Any, Dict, List
 import wandb
 from wandb import Run
 from wandb.errors import AuthenticationError, CommError
-from submission.backend_config import Direction
 
 log = logging.getLogger(__name__)
 
@@ -29,7 +28,6 @@ def export_top_wandb_runs(
     project: str,
     acknowledged: bool,
     metric: str,
-    direction: Direction,
     top_n: int,
 ) -> List[Dict[str, Any]]:
     """
@@ -66,14 +64,11 @@ def export_top_wandb_runs(
         ) from exc
 
     api = wandb.Api()
-
-    order = _build_wandb_order(metric, direction)
     project_path = f"{entity}/{project}"
-
     log.info("Fetching runs for project %s", project_path)
 
     try:
-        runs = api.runs(project_path, order=order)
+        runs = api.runs(project_path, order="+created_at")
     except CommError as exc:
         raise WandBExportError(
             f"Unable to access W&B project '{project_path}'.\n"
@@ -110,11 +105,6 @@ def export_top_wandb_runs(
 ###############################################################################
 # Helpers
 ###############################################################################
-
-def _build_wandb_order(metric: str, direction: Direction) -> str:
-    prefix = "-" if direction == Direction.DESCENDING else ""
-    return f"{prefix}summary_metrics.{metric}"
-
 
 def _serialize_run(run: Run) -> Dict[str, Any]:
     """

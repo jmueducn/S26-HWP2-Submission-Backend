@@ -105,7 +105,6 @@ def create_submission_zip(cfg: SubmissionConfig, backend_cfg: BackendConfig) -> 
             project=cfg.wandb_project,
             acknowledged=cfg.acknowledged,
             metric=backend_cfg.metric,
-            direction=backend_cfg.direction,
             top_n=backend_cfg.wandb_top_n,
         )
     except Exception as exc:
