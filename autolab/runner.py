@@ -3,10 +3,10 @@
 Autolab Grader Entry Point
 
 This script:
-  • Loads student submission
-  • Executes categorized tests
-  • Applies rubric-based scoring
-  • Emits a single JSON object to stdout
+  - Loads student submission
+  - Executes categorized tests
+  - Applies rubric-based scoring
+  - Emits a single JSON object to stdout
 """
 
 import json
@@ -17,7 +17,7 @@ from testing_framework import TestingFramework
 
 
 ###############################################################################
-# Rubric (must sum to ≤ 100)
+# Rubric (must sum to <= 100)
 ###############################################################################
 
 RUBRIC = {
