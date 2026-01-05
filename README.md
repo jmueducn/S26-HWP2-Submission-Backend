@@ -1,76 +1,159 @@
-# s26-p2-submission-backend
+# HWP2 Submission Backend – TA Documentation
 
-[![Build Status](https://img.shields.io/badge/build-passing-brightgreen)](../../actions)
-[![License](https://img.shields.io/badge/license-MIT-blue.svg)](LICENSE)
+This repository contains the proposed **course-wide submission framework** used to
+standardize student submissions for Autolab grading for HWP2's.
 
-## What the Project Does
+It is designed to:
 
-**s26-p2-submission-backend** is a submission packaging toolkit for CMU 11-785/11-685 HWP2 Deep Learning assignments. It provides an automated way to validate and package student submissions for project part 2 (P2), including Kaggle competitions and Weights & Biases (W&B) experiment tracking.
+- Enforce submission acknowledgements
+- Collect student-written README files
+- Validate student Kaggle usernames
+- Collect WandB experiment logs
+- Package all required artifacts into a single ZIP file for Autolab
 
-## How to Get Started
-
-### Prerequisites
-
-- Python 3.8+
-- [Kaggle API](https://github.com/Kaggle/kaggle-api) credentials (for Kaggle validation)
-- [Weights & Biases](https://wandb.ai/) account (for experiment tracking)
-
-### Installation
-
-Clone the repository and install dependencies:
-
-```bash
-git clone <this-repo-url>
-cd s26-p2-submission-backend
-pip install -r requirements.txt  # if provided, else install kaggle, wandb
-```
-
-### Usage
-
-#### 1. Simulate Autolab Grading
-
-```bash
-make simulate
-```
-
-This will create a dummy submission and run the autograder simulation locally.
-
-#### 2. Package Your Submission
-
-Edit and use the scripts in `submission/` to generate required files:
-
-- `main.py`: Main entry for packaging and validation
-- `backend_config.py`, `submission_config.py`: Define experiment and submission configs
-- `model_metadata.py`: Build model metadata for auditing
-- `wandb_export.py`: Export top W&B runs
-- `kaggle_validate.py`: Validate Kaggle submissions
-
-Example (from project root):
-
-```bash
-python submission/main.py
-```
-
-#### 3. Upload to Autolab
-
-After simulation and packaging, upload the generated `autograde-Makefile` and `autograde.tar` to Autolab as instructed.
-
-### Configuration
-
-Assignment-specific configs are in `submission/configs/` (e.g., `hw1p2.json`). Edit or extend as needed for your assignment.
-
-## Where to Get Help
-
-- Assignment Piazza/Ed forum
-- Course staff office hours
-- [Kaggle API docs](https://github.com/Kaggle/kaggle-api)
-- [Weights & Biases docs](https://docs.wandb.ai/)
-
-## Maintainers and Contributions
-
-- Maintained by the CMU 11-785/11-685 course staff.
-- For contributions, see [CONTRIBUTING.md](CONTRIBUTING.md) (if available) or contact the maintainers.
+This README is intended **for future TAs and instructors** maintaining or
+reusing this infrastructure.
 
 ---
 
-_This project is for educational use in CMU 11-785/11-685. For license details, see [LICENSE](LICENSE)._
+## Repository Overview
+
+```
+.
+├── submission            # Core submission logic (TA-maintained)
+|  ├── configs            # TA-controlled configuration files
+|  │    └── ...json          # Example config files (if any)
+|  |
+|  ├── __init__.py
+|  ├── acknowledgement.py   # Acknowledgement text
+|  ├── backend_config.py    # TA-controlled backend configuration
+|  ├── kaggle_validate.py   # Kaggle API interaction logic
+|  ├── main.py              # Main submission orchestration logic
+|  ├── model_metadata.py    # Model metadata generation logic
+|  ├── submission_config.py # Student-editable submission configuration
+|  └──  wandb_adapter.py    # WandB API interaction logic
+|
+├── autolab  # Autolab grading files to set up autograder
+|  ├── runner.py             # Autolab grader entry point
+|  └── testing_framework.py  # Autolab testing framework
+|
+├── simulate_autolab.py        # Local autograder simulator for TAs
+├── Makefile                   # TA Makefile for autograder simulation and packaging
+└── README.md                  # This file
+
+```
+
+---
+
+## Folder: `submission`
+
+### Purpose
+
+The folder `submission` contains **all logic** required to:
+
+- Validate submissions
+- Export WandB runs
+- Query Kaggle for official scores
+- Enforce deadlines and Slack-day rules
+- Generate the final Autolab ZIP artifact
+
+---
+
+### High-Level Flow
+
+The backend performs the following steps in order:
+
+1. **Acknowledgement Enforcement**
+
+   - Students must explicitly set a global variable `ACKNOWLEDGED = True` in their notebook
+   - An `acknowledgement.txt` file is generated and included in the submission ZIP, the content of which is defined in `acknowledgement.py`
+
+2. **README Generation**
+
+   - Saves a student-completed `README.txt` describing:
+     - Model architecture
+     - Training strategy
+     - Augmentations
+     - Notebook execution notes
+
+3. **WandB Export**
+
+   - Logs into WandB using the student's API key
+   - Pulls the top `N` runs based on a `+created_at` timestamp tiebreaker
+   - Serializes run metadata + limited history into a `.pkl` file
+
+4. **Kaggle Score Retrieval**
+
+   - Authenticates using Kaggle API credentials
+   - Checks both regular and Slack competitions to see if user has valid submissions
+   - Extracts the competitions submitted to and the number of submissions made
+   - Saves structured metadata to a `.json` file
+
+5. **Submission Packaging**
+   - Validates existence of all required files
+   - Flattens paths and zips artifacts into a single submission zip file
+
+---
+
+### Key Configuration (TA-Controlled)
+
+[[TODO: List key configuration variables here, e.g., number of WandB runs to pull, competition names, etc.]]
+
+---
+
+### Student Responsibilities
+
+Students are expected to:
+
+1. Fill out metadata:
+   - Final model state
+   - Kaggle username
+   - WandB project
+   - README contents
+2. Provide correct file paths for Notebook
+3. Explicitly accept the acknowledgement
+4. Run the final submission cell
+
+---
+
+## Folder: `autolab`
+
+[[TODO: Describe autolab folder contents here.]]
+
+---
+
+## Common TA Tasks
+
+### Updating for a New Semester
+
+[[TODO: List steps to update for a new semester here eg. updating config files etc.]]
+
+### Debugging Student Issues
+
+Most failures fall into:
+
+- Missing API keys
+- Incorrect file paths
+- Forgotten acknowledgement flag
+- No valid Kaggle submissions
+
+Backend error messages are intentionally explicit.
+
+---
+
+## Recommended Future Improvements
+
+[[TODO: List potential enhancements here.]]
+
+---
+
+## Contact / Ownership
+
+Maintained by:
+**Course Staff / TA Team**
+
+If you inherit this codebase:
+
+- Read this README first
+- Avoid modifying backend logic mid-semester
+- Prefer additive changes over refactors
