@@ -7,12 +7,12 @@ AUTOGRADE_FILES = $(TEST_DIR)/testing_framework.py $(TEST_DIR)/runner.py
 
 # Python command
 # python3 for autolab
-PYTHON = python
+PYTHON = python3
 
 # Default target (when 'make' is run without arguments)
 default: grade
 
-simulate:
+simulate: # Simulate autograder locally
 	@rm -rf autograde.tar dummy_submission.zip autograde-Makefile autograde_simutation
 	@make create_autograde
 	@cp Makefile autograde-Makefile
