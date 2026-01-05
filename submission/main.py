@@ -164,7 +164,7 @@ def create_submission_zip(cfg: SubmissionConfig, backend_cfg: BackendConfig) -> 
     write_text("ACKNOWLEDGEMENT.txt", ACKNOWLEDGEMENT_MESSAGE.strip())
     write_text("README.txt", cfg.readme.strip())
     write_json(backend_cfg.model_metadata_json, model_metadata)
-    write_json(backend_cfg.wandb_output_json, wandb_export)
+    write_pickle(backend_cfg.wandb_output_pkl, wandb_export)
     write_json(backend_cfg.kaggle_output_json, kaggle_export)
 
     artifacts.append(Path(cfg.notebook_path))

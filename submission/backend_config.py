@@ -43,8 +43,8 @@ class BackendConfig:
         "description": "Number of top W&B runs to export"
     })
     
-    wandb_output_json: str = field(
-        default="wandb_top_runs.json", # If you change this, make sure to update autolab/runner.py too
+    wandb_output_pkl: str = field(
+        default="wandb_top_runs.pkl", # If you change this, make sure to update autolab/runner.py too
         metadata={
             "description": "Serialized W&B runs for autograding"
         }
@@ -108,7 +108,7 @@ class BackendConfig:
             "param_limit": self.param_limit,
             "model_metadata_json": self.model_metadata_json,
             "wandb_top_n": self.wandb_top_n,
-            "wandb_output_json": self.wandb_output_json,
+            "wandb_output_pkl": self.wandb_output_pkl,
             "main_competition_name": self.main_competition_name,
             "slack_competition_name": self.slack_competition_name,
             "kaggle_output_json": self.kaggle_output_json,
@@ -131,7 +131,7 @@ class BackendConfig:
             param_limit=data.get("param_limit", 0),
             model_metadata_json=data.get("model_metadata_json", "model_metadata.json"),
             wandb_top_n=data.get("wandb_top_n", 10),
-            wandb_output_json=data.get("wandb_output_json", "wandb_top_runs.json"),
+            wandb_output_pkl=data.get("wandb_output_pkl", "wandb_top_runs.pkl"),
             main_competition_name=data["main_competition_name"],
             slack_competition_name=data["slack_competition_name"],
             kaggle_output_json=data.get("kaggle_output_json", "kaggle_data.json"),
