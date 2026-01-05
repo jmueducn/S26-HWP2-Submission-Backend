@@ -59,17 +59,20 @@ def simulate_autolab(submission_path: str, autograde_dir: str = "autograde_simul
     try:
         # Copy student submission and rename to handin.zip
         shutil.copy2(submission_path, autograde_dir / "handin.zip")
+        print(f"Copied submission to: {autograde_dir / 'handin.zip'}")
         
         # Copy autograde.tar
         if not Path("autograde.tar").exists():
             raise FileNotFoundError("autograde.tar not found. Run 'make create_autograde' first.")
         shutil.copy2("autograde.tar", autograde_dir / "autograde.tar")
+        print(f"Copied autograde.tar to: {autograde_dir / 'autograde.tar'}")
         
         # Copy and rename Makefile
         if not Path("autograde-Makefile").exists():
             raise FileNotFoundError("autograde-Makefile not found")
         shutil.copy2("autograde-Makefile", autograde_dir / "Makefile")
-    
+        print(f"Copied Makefile to: {autograde_dir / 'autograde-Makefile'}")    
+
     except FileNotFoundError as e:
         print(f"Error: {e}")
         return
@@ -77,6 +80,7 @@ def simulate_autolab(submission_path: str, autograde_dir: str = "autograde_simul
     # Step 3: Change to autograding directory
     original_dir = os.getcwd()
     os.chdir(autograde_dir)
+    print(f"\nChanged working directory to: {autograde_dir}\n")
     
     try:
         # Step 4: Execute make command

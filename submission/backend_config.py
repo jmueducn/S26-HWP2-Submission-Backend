@@ -44,7 +44,7 @@ class BackendConfig:
     })
     
     wandb_output_pkl: str = field(
-        default="wandb_top_runs.pkl", # If you change this, make sure to update autolab/runner.py too
+        default="wandb_export.pkl", # If you change this, make sure to update autolab/runner.py too
         metadata={
             "description": "Serialized W&B runs for autograding"
         }
@@ -56,7 +56,7 @@ class BackendConfig:
     main_competition_name: str = field(default="", metadata={"description": "Kaggle competition name for submission"})
     slack_competition_name: str = field(default="", metadata={"description": "Kaggle competition name for Slack submission"})
     kaggle_output_json: str = field(
-        default="kaggle_data.json", # If you change this, make sure to update autolab/runner.py too
+        default="kaggle_metadata.json", # If you change this, make sure to update autolab/runner.py too
         metadata={
         "description": "Kaggle score metadata file"
         }
@@ -131,10 +131,10 @@ class BackendConfig:
             param_limit=data.get("param_limit", 0),
             model_metadata_json=data.get("model_metadata_json", "model_metadata.json"),
             wandb_top_n=data.get("wandb_top_n", 10),
-            wandb_output_pkl=data.get("wandb_output_pkl", "wandb_top_runs.pkl"),
+            wandb_output_pkl=data.get("wandb_output_pkl", "wandb_export.pkl"),
             main_competition_name=data["main_competition_name"],
             slack_competition_name=data["slack_competition_name"],
-            kaggle_output_json=data.get("kaggle_output_json", "kaggle_data.json"),
+            kaggle_output_json=data.get("kaggle_output_json", "kaggle_metadata.json"),
             submission_zip=data.get("submission_zip", "handin.zip"),
         )
     
