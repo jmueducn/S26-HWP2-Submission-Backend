@@ -3,7 +3,6 @@ from __future__ import annotations
 import logging
 from typing import Any, Dict, List
 import wandb
-from wandb import Run
 from wandb.errors import AuthenticationError, CommError
 
 log = logging.getLogger(__name__)
@@ -93,7 +92,7 @@ def export_top_wandb_runs(
 # Helpers
 ###############################################################################
 
-def _serialize_run(run: Run) -> Dict[str, Any]:
+def _serialize_run(run: Any) -> Dict[str, Any]:
     """
     Serialize a W&B run into a fully JSON-serializable dictionary.
     """
