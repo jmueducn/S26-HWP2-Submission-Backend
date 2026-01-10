@@ -19,14 +19,16 @@ autolab: # Prepare autograder package
 	@echo "Autograder package prepared."
 
 simulate: # Simulate autograder locally
+	@echo "Simulating autograder locally..."
 	@rm -rf autograde.tar dummy_submission.zip autograde-Makefile autograde_simutation
 	@make create_autograde
 	@cp Makefile autograde-Makefile
 	@make dummy_submission
 	@echo "Simulating autograder..."
 	@python simulate_autolab.py dummy_submission.zip
-	@rm -rf dummy_submission.zip autograde_simulation
-
+	@rm -rf dummy_submission.zip autograde_simulation autograde-Makefile autograde.tar
+	@echo "Simulation complete."
+ 
 # Create autograde.tar containing all test files and dependencies
 create_autograde:
 	@echo "Creating autograde.tar..."
