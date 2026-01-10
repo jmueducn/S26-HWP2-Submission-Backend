@@ -60,6 +60,7 @@ Follow the steps below to prepare the homework infrastructure for a new semester
      - Updated parameter limits and constraints
 
    - Replace `X` with the appropriate homework number.
+   - For more details, refer to the **Configuration File Instructions** section below.
 
 2. **Verify the submission pipeline**
 
