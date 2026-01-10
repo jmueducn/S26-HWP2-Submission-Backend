@@ -12,7 +12,7 @@ PYTHON = python3
 # Default target (when 'make' is run without arguments)
 default: grade
 
-mk_autolab: # Prepare autograder package
+autolab: # Prepare autograder package
 	@rm -rf autograde.tar autograde-Makefile
 	@make create_autograde
 	@cp Makefile autograde-Makefile
