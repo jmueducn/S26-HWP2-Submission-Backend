@@ -1,6 +1,6 @@
 {
-    "param_limit": 0,
-    "main_competition_name": "",
-    "slack_competition_name": "",
+    "param_limit": 20000000000,
+    "main_competition_name": "hw-1-p-2-spring-2026-sandbox-testing",
+    "slack_competition_name": "hw-1-p-2-spring-2026-sandbox-testing",
     "submission_zip": "HW1P2_final_submission.zip"
 }
