@@ -217,3 +217,7 @@ __marimo__/
 
 # Github
 .github/*
+
+# Autolab artifacts
+autograde.tar
+autograde-Makefile
