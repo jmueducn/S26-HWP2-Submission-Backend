@@ -145,6 +145,9 @@ class BackendConfig:
 FILE_PATH = os.path.dirname(os.path.abspath(__file__))
 
 # TODO: HW1P2_BACKEND_CONFIG, HW3P2_BACKEND_CONFIG, HW4P2_BACKEND_CONFIG
+with open(os.path.join(FILE_PATH, "configs/hw1p2.json"), "r", encoding="utf-8") as f:
+    config_data = json.load(f)
+HW1P2_BACKEND_CONFIG = BackendConfig.from_dict(config_data)
 
 with open(os.path.join(FILE_PATH, "configs/hw2p2.json"), "r", encoding="utf-8") as f:
     config_data = json.load(f)
