@@ -23,6 +23,7 @@ from submission.model_metadata import build_model_metadata
 logging.basicConfig(
     level=logging.INFO,
     format="%(levelname)s | %(message)s",
+    handlers=[logging.StreamHandler(stream=os.sys.stdout)],
 )
 log = logging.getLogger(__name__)
 
