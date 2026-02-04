@@ -113,6 +113,7 @@ def export_kaggle_metadata(
                 len(subs),
             )
         except Exception:
+            results[label] = 0
             pass
 
     if total_submissions == 0:
