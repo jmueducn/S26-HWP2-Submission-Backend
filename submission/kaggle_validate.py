@@ -101,16 +101,19 @@ def export_kaggle_metadata(
     total_submissions = 0
 
     for label, competition in competitions.items():
-        subs = _submissions_for_user(api, competition, username)
-        results[label] = len(subs)
-        total_submissions += len(subs)
+        try:
+            subs = _submissions_for_user(api, competition, username)
+            results[label] = len(subs)
+            total_submissions += len(subs)
 
-        log.info(
-            "✓ %s competition '%s': %d submission(s)",
-            label.capitalize(),
-            competition,
-            len(subs),
-        )
+            log.info(
+                "✓ %s competition '%s': %d submission(s)",
+                label.capitalize(),
+                competition,
+                len(subs),
+            )
+        except Exception:
+            pass
 
     if total_submissions == 0:
         raise KaggleValidationError(
