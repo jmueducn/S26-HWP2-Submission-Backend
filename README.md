@@ -90,7 +90,6 @@ Follow the steps below to prepare the homework infrastructure for a new semester
    - Create a new assignment in Autolab.
    - Upload the generated `autograde-Makefile` and `autograde.tar`.
 
-5. **Add s
 
 5. **Update the homework notebook**
 
