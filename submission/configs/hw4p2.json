@@ -1,5 +1,5 @@
 {
-    "param_limit": 0,
+    "param_limit": 20000000,
     "main_competition_name": "",
     "slack_competition_name": "",
     "submission_zip": "HW4P2_final_submission.zip"
