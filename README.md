@@ -86,10 +86,54 @@ Follow the steps below to prepare the homework infrastructure for a new semester
      - `autograde.tar`
 
 4. **Create the Autolab assignment**
+   - Create a new assignment in Autolab and upload the generated `autograde-Makefile` and `autograde.tar`. Please follow the steps below.
 
-   - Create a new assignment in Autolab.
-   - Upload the generated `autograde-Makefile` and `autograde.tar`.
+   1. Create a new assignment in Autolab:
 
+      Autolab → Install Assessment → **Create from scratch** → **Create New Assessment**
+
+      Set:
+      - **Display name**
+      - **Category name**
+
+      Then click **Create Assessment**.
+
+   2. Configure the Autograder:
+
+      Go to:
+
+      **Edit assessment → Basic → Modules Used**
+
+      Click the **+** next to **Autograder**.
+
+      In **Autograder Settings**, set:
+
+      - **VM Image:** `11785_f24.img`
+
+      Upload the files generated in Step 3:
+
+      - `autograde-Makefile`
+      - `autograde.tar`
+
+      Then click **Save Settings**.
+
+   3. Configure Handin settings:
+
+      Under **Handin**, set:
+
+      - **Deadline (DDL)**
+      - **Max submission size**
+
+   4. Add the validation problem:
+
+      Go to **Problems → Add Problem**
+
+      Set:
+
+      - **Name:** `validate-zip`
+      - **Max score:** `100`
+
+      Then click **Save Problem**.
 
 5. **Update the homework notebook**
 
