@@ -121,7 +121,7 @@ Follow the steps below to prepare the homework infrastructure for a new semester
 
       Under **Handin**, set:
 
-      - **Deadline (DDL)**
+      - **Deadlines**
       - **Max submission size**
 
    4. Add the validation problem:
