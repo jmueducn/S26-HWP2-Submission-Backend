@@ -153,3 +153,11 @@ with open(os.path.join(FILE_PATH, "configs/hw2p2.json"), "r", encoding="utf-8") 
     config_data = json.load(f)
 HW2P2_BACKEND_CONFIG = BackendConfig.from_dict(config_data)
 
+with open(os.path.join(FILE_PATH, "configs/hw3p2.json"), "r", encoding="utf-8") as f:
+    config_data = json.load(f)
+HW3P2_BACKEND_CONFIG = BackendConfig.from_dict(config_data)
+
+with open(os.path.join(FILE_PATH, "configs/hw4p2.json"), "r", encoding="utf-8") as f:
+    config_data = json.load(f)
+HW4P2_BACKEND_CONFIG = BackendConfig.from_dict(config_data)
+
