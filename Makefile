@@ -3,6 +3,9 @@ HANDIN_FILE = handin.zip
 TEST_DIR = autolab
 AUTOGRADE_FILES = $(TEST_DIR)/testing_framework.py $(TEST_DIR)/runner.py
 
+# Submission zip to use for simulation (default: dummy; override with: make simulate SUBMISSION=path/to/file.zip)
+SUBMISSION ?= dummy_submission.zip
+
 .SUFFIXES:          # Disable implicit rules
 
 # Python command
@@ -18,15 +21,16 @@ mk_autolab: # Prepare autograder package
 	@cp Makefile autograde-Makefile
 	@echo "Autograder package prepared."
 
-simulate: # Simulate autograder locally
-	@echo "Simulating autograder locally..."
-	@rm -rf autograde.tar dummy_submission.zip autograde-Makefile autograde_simutation
+simulate: # Simulate autograder locally (use SUBMISSION=path/to/file.zip to test a real student submission)
+	@echo "Simulating autograder locally with: $(SUBMISSION)"
+	@rm -rf autograde.tar autograde-Makefile autograde_simulation
 	@make create_autograde
 	@cp Makefile autograde-Makefile
-	@make dummy_submission
+	@if [ "$(SUBMISSION)" = "dummy_submission.zip" ]; then make dummy_submission; fi
 	@echo "Simulating autograder..."
-	@python simulate_autolab.py dummy_submission.zip
-	@rm -rf dummy_submission.zip autograde_simulation autograde-Makefile autograde.tar
+	@python simulate_autolab.py $(SUBMISSION)
+	@if [ "$(SUBMISSION)" = "dummy_submission.zip" ]; then rm -f dummy_submission.zip; fi
+	@rm -rf autograde_simulation autograde-Makefile autograde.tar
 	@echo "Simulation complete."
  
 # Create autograde.tar containing all test files and dependencies

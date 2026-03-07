@@ -221,3 +221,6 @@ __marimo__/
 # Autolab artifacts
 autograde.tar
 autograde-Makefile
+
+# MacOS
+.DS_Store
